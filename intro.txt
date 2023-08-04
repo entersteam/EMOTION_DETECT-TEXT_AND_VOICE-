@@ -1,3 +1,7 @@
 데이터 전처리 과정
 -같은 감정이 서로 다른 형태로 표현됨. -> 통일
 -감정의 개수가 많이 차이남. -> 데이터의 편향 -> 수정
+
+한글 -> 영어로 번역해보기
+https://www.youtube.com/watch?v=oltGIc4uo5c -- mfcc의 기본적인 사용법
+https://www.youtube.com/watch?v=vIPIuU_nd9o -- mfcc + CNN 인공지능
