@@ -4,3 +4,8 @@ matplotlib
 tensorflow
 scikit-learn
 konlpy
+SpeechRecognition
+pyaudio
+openai
+opencv-python
+librosa
