@@ -13,6 +13,7 @@ from multiprocessing import Process
 import time
 import speech_recognition as sr
 import openai
+from utils.tts import TTS
 
 recognizer = sr.Recognizer()
 
@@ -151,9 +152,10 @@ def gpt_anwser():
             messages=messages
         )
         answer = response['choices'][0]['message']['content']
-        
+        tts_p = Process(target=TTS, args=(answer))
         print(answer)
-        time.sleep(10)
+        tts_p.start()
+        tts_p.join()
 
 
 if __name__ == '__main__':

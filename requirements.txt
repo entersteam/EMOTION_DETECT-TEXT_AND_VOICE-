@@ -9,3 +9,5 @@ pyaudio
 openai
 opencv-python
 librosa
+gtts
+playsound
