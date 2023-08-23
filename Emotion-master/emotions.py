@@ -13,7 +13,18 @@ from multiprocessing import Process
 import time
 import speech_recognition as sr
 import openai
-from utils.tts import TTS
+from gtts import gTTS
+from playsound import playsound
+
+def TTS(text, path='test.mp3'):
+    try:
+        tts_ko = gTTS(text, lang='ko')
+        tts_ko.save(path)
+        playsound(path)
+    except:
+        print('tts error')
+        pass
+    
 
 recognizer = sr.Recognizer()
 
@@ -88,7 +99,7 @@ def cam_emotion():
             gray_face = preprocess_input(gray_face, True)
             gray_face = np.expand_dims(gray_face, 0)
             gray_face = np.expand_dims(gray_face, -1)
-            emotion_prediction = emotion_classifier.predict(gray_face)
+            emotion_prediction = emotion_classifier.predict(gray_face,  verbose = 0)
             emotion_probability = np.max(emotion_prediction)
             emotion_label_arg = np.argmax(emotion_prediction)
             emotion_text = emotion_labels[emotion_label_arg]
@@ -151,11 +162,10 @@ def gpt_anwser():
             model=model,
             messages=messages
         )
+        
         answer = response['choices'][0]['message']['content']
-        tts_p = Process(target=TTS, args=(answer))
         print(answer)
-        tts_p.start()
-        tts_p.join()
+        TTS(answer)
 
 
 if __name__ == '__main__':
