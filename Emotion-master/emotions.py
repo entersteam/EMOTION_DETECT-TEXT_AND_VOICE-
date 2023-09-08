@@ -16,7 +16,7 @@ import openai
 from gtts import gTTS
 from playsound import playsound
 
-def TTS(text, path='test.mp3'):
+def TTS(text, path='.//test.mp3'):
     try:
         tts_ko = gTTS(text, lang='ko')
         tts_ko.save(path)
