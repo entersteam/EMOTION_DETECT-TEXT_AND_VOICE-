@@ -23,7 +23,6 @@ def TTS(text, path='.//test.mp3'):
         playsound(path)
     except:
         print('tts error')
-        pass
     
 
 recognizer = sr.Recognizer()
