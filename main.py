@@ -30,7 +30,7 @@ def TTS(text, path='.//output.mp3'):
         print('tts error')
 
 # 이전 대화 히스토리를 저장할 변수
-conversation_history = [{"role": "system", "content": "너는 상담사야. 너는 앞으로 말할때 사람처럼 말해야 해. 대답을 짧게 해야해. 인사로 시작해줘"}]
+conversation_history = [{"role": "system", "content": "너는 상담사야. 너는 앞으로 말할때 사람처럼 말해야 해. 대답을 짧게 해야해."}]
 
 # ChatGPT와 대화하기 위한 함수 정의
 def chat_with_gpt(prompt):
