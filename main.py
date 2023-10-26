@@ -16,7 +16,7 @@ import pickle
 recognizer = sr.Recognizer()
 okt = Okt()
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = "YOUR OPENAI KEY"
 
 openai.api_key = OPENAI_API_KEY
 
