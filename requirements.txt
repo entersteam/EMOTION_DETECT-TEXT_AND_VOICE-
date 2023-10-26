@@ -11,3 +11,4 @@ opencv-python
 librosa
 gtts
 playsound
+ultralytics
