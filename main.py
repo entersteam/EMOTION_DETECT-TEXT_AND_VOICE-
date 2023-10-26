@@ -1,8 +1,9 @@
 import cv2
 import numpy as np
-from keras.models import load_model
-from statistics import mode
-from multiprocessing import Process
+import tensorflow as tf
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from konlpy.tag import Okt
 import time
 import speech_recognition as sr
 import openai
@@ -10,9 +11,11 @@ from gtts import gTTS
 from playsound import playsound
 from ultralytics import YOLO
 import math
-
+import pickle
 
 recognizer = sr.Recognizer()
+okt = Okt()
+
 OPENAI_API_KEY = "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"
 
 openai.api_key = OPENAI_API_KEY
@@ -20,8 +23,25 @@ openai.api_key = OPENAI_API_KEY
 model = "gpt-3.5-turbo"
 model_YOLO = YOLO("//Users//minjae//Desktop//col//EMOTION_DETECT-TEXT_AND_VOICE--main//weights//best.pt") #가중치 파일 경로
 
+with open('tokenizer.pickle', 'rb') as handle:
+    tokenizer = pickle.load(handle)
+    
+#모델 불러오기
+model = tf.keras.Sequential([
+  tf.keras.layers.Embedding(10000, 300, input_length=45), 
+  tf.keras.layers.LSTM(units=64, return_sequences=True), 
+  tf.keras.layers.LSTM(units=64), 
+  tf.keras.layers.Dense(64, activation='relu'),
+  tf.keras.layers.Dropout(0.5),
+  tf.keras.layers.Dense(4, activation='softmax')
+])
+
+model.load_weights('./lstm/my_checkpoint')
 
 cap = cv2.VideoCapture(0)
+
+classNames = ['angry','sad','neatural','happy']
+
 
 def TTS(text, path='.//output.mp3'):
     try:
@@ -55,16 +75,17 @@ def chat_with_gpt(prompt):
     return message
 
 # # ChatGPT와 상호 작용하기
-def get_emotion():
-    emot = None
-    return emot
+def text_to_emotion(text:str):
+    seq = [okt.morphs(text)]
+    seq = tokenizer.texts_to_sequences(seq)
+    seq = pad_sequences(seq, padding='post', maxlen=45)
+    return classNames[np.argmax(model.predict(seq))]
 
 def emotion_Video():
     
     cap = cv2.VideoCapture(0)
     cap.set(3, 640)
     cap.set(4, 480)
-    classNames = ['angry','happy','neatural','sad']
     emotion = ""
     start_t = time.time() # 같은 감정이 반복되서 감지되는 횟수 t 가 5가 되면 영상 감정인식 끝
     
