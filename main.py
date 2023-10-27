@@ -90,7 +90,7 @@ def text_to_emotion(text:str):
     seq = [okt.morphs(text)]
     seq = tokenizer.texts_to_sequences(seq)
     seq = pad_sequences(seq, padding='post', maxlen=45)
-    return text_model_emotios[np.argmax(model.predict(seq))]
+    return text_model_emotionsnp.argmax(model.predict(seq))]
 
 def emotion_Video():
     
