@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 import tensorflow as tf
@@ -12,6 +13,7 @@ from playsound import playsound
 from ultralytics import YOLO
 import math
 import pickle
+import gdown
 
 recognizer = sr.Recognizer()
 okt = Okt()
@@ -21,7 +23,16 @@ OPENAI_API_KEY = "YOUR OPENAI KEY"
 openai.api_key = OPENAI_API_KEY
 
 model = "gpt-3.5-turbo"
-model_YOLO = YOLO("//Users//minjae//Desktop//col//EMOTION_DETECT-TEXT_AND_VOICE--main//weights//best.pt") #가중치 파일 경로
+
+if not 'best.pt' in os.listdir():
+    file_id = '1VpjCn6l4o_NMzhpLh-03D6nOzcWS9zg_'
+    output_file = './best.pt'
+    gdown.download(f'https://drive.google.com/uc?id={file_id}', output_file, quiet=False)
+    print('download complete')
+else:
+    print('already downloaded')
+
+model_YOLO = YOLO("./best.pt") #가중치 파일 경로
 
 with open('tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
@@ -130,8 +141,6 @@ def emotion_Video():
         cv2.imshow('Webcam', img)
         if cv2.waitKey(1) == ord('q'):
             break
-    
-
     
 
 if __name__=='__main__':

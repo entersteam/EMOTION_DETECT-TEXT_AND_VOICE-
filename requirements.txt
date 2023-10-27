@@ -12,3 +12,4 @@ librosa
 gtts
 playsound
 ultralytics
+gdown
