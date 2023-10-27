@@ -51,8 +51,8 @@ model.load_weights('./lstm/my_checkpoint')
 
 cap = cv2.VideoCapture(0)
 
-classNames = ['angry','sad','neatural','happy']
-
+classNames = ['angry','happy','neatural','sad']
+text_model_emotions = ['angry', 'sad', 'neatural', 'happy']
 
 def TTS(text, path='.//output.mp3'):
     try:
@@ -90,7 +90,7 @@ def text_to_emotion(text:str):
     seq = [okt.morphs(text)]
     seq = tokenizer.texts_to_sequences(seq)
     seq = pad_sequences(seq, padding='post', maxlen=45)
-    return classNames[np.argmax(model.predict(seq))]
+    return text_model_emotios[np.argmax(model.predict(seq))]
 
 def emotion_Video():
     
