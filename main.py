@@ -141,7 +141,8 @@ def emotion_Video():
         cv2.imshow('Webcam', img)
         if cv2.waitKey(1) == ord('q'):
             break
-    
+
+print(text_to_emotion('나는 너무 행복해'))
 
 if __name__=='__main__':
     while True:
